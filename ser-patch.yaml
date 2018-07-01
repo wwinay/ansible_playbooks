@@ -1,0 +1,25 @@
+- name: "install patches"
+  user: cwr.vinay.khandalkar
+  sudo: yes
+  hosts: all
+  tasks:
+    - name: "upgrade OS"
+      yum: 
+        update_cache: yes
+        name: '*'
+        state: latest
+   
+    - name: Reboot server
+      shell: nohup bash -c "sleep 3s && shutdown -r now" &
+
+    - name: Wait for the server to reboot
+      sudo: no
+      local_action: wait_for host="{{inventory_hostname}}" search_regex=OpenSSH port=22 timeout=300 delay=20 connect_timeout=10
+
+    - shell: uptime
+      register: upt
+
+    - debug: 
+        var: upt 
+
+    - import_tasks: httpd-check.yaml 

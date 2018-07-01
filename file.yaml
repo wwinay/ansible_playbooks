@@ -1,0 +1,10 @@
+- name: "Create and Delete the file....."
+  user: cwr.vinay.khandalkar
+  hosts: all
+  tasks:
+    - name: "Create the file"
+      file: path=/opt/tmp/ans-file.txt state=touch
+
+    - name: "Delete the file"
+      file: path=/opt/tmp/ans-file.txt state=absent
+

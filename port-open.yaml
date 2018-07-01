@@ -1,0 +1,7 @@
+- name: "CHeck 80 port against server"
+  sudo: yes
+  hosts: all
+  user: cwr.vinay.khandalkar
+  tasks:
+    - name: "Check httpd port enabled on server"
+      wait_for: host=lnpnpriftst063v port=8080 timeout=1

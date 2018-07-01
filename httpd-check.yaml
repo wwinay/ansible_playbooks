@@ -1,0 +1,17 @@
+- name: "check httpd"
+  command: systemctl status httpd
+  register: service_httpd
+
+- name: Debug
+  debug:
+  var: service_httpd
+
+- name: Service check with service module
+  service: 
+    name: "httpd" 
+    state: started 
+    enabled: yes
+  register: httpd_status
+      
+- debug: msg="httpd is running"
+  when: service_httpd.stdout.find("running") != -1

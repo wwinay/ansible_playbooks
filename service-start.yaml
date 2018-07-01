@@ -1,0 +1,9 @@
+- name: "service start"
+  sudo: yes
+  hosts: all
+  user: cwr.vinay.khandalkar
+  tasks:
+    - service:
+        name: httpd
+        state: started
+        enabled: yes  
