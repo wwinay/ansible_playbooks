@@ -1,10 +1,16 @@
+---
+
+#- name: "check if the service is running"
+#  sudo: yes
+#  hosts: all
+#  tasks:
 - name: "check httpd"
   command: systemctl status httpd
   register: service_httpd
 
 - name: Debug
   debug:
-  var: service_httpd
+    var: service_httpd
 
 - name: Service check with service module
   service: 
