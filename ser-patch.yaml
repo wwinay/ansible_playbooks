@@ -22,4 +22,4 @@
     - debug: 
         var: upt 
 
-    - import_tasks: httpd-check.yaml 
+    - include: /home/cwr.vinay.khandalkar/ansible/httpd-check.yaml 
