@@ -1,0 +1,23 @@
+- name: "Backup of necessary file before patching of server."
+  user: root
+  #sudo: yes
+  hosts: all
+  tasks:
+    - name: taking backup of fstab, kernel version, mounted disks, running services and ports
+      command: "{{ item }}"
+      with_items:
+        - /bin/mkdir /tmp/patch-on-$(date +%d-%m-%Y-%T)
+        - /bin/cp /etc/fstab /tmp/patch-on-$(date +%d-%m-%Y-%T)
+        - uname -a > /tmp/patch-on-$(date +%d-%m-%Y-%T)/uname
+        - df -h > /tmp/patch-on-$(date +%d-%m-%Y-%T)/mounted_disks
+        - chkconfig --list > /tmp/patch-on-$(date +%d-%m-%Y-%T)/running_services
+        - netstat -tunlp > /tmp/patch-on-$(date +%d-%m-%Y-%T)/listening_ports
+
+    - name: Uptime of the machine
+      shell: /usr/bin/uptime
+      register: uptime
+
+    - debug: var={{ item }}
+      with_items:
+        - uptime.stdout
+    
